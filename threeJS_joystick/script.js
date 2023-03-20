@@ -144,12 +144,12 @@ function updatePlayer() {
 function addJoystick() {
   const options = {
     zone: document.getElementById("joystickWrapper1"),
+    size: 200,
     multitouch: true,
     maxNumberOfNipples: 2,
     color: "#dddddd",
     restJoystick: true,
     shape: "circle",
-    position: { top: "60px", left: "60px" },
     dynamicPage: true,
   };
 
