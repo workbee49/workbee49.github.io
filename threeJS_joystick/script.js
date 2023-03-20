@@ -155,8 +155,6 @@ function addJoystick() {
 
   joyManager = nipplejs.create(options);
 
-  console.log(joyManager);
-
   joyManager.on("move", function (evt, data) {
     const forward = data.vector.y;
     const turn = data.vector.x;
