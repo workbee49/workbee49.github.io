@@ -94,7 +94,6 @@ addJoystick();
 function resize() {
   let w = window.innerWidth;
   let h = window.innerHeight;
-
   renderer.setSize(w, h);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
