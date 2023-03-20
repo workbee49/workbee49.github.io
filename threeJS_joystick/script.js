@@ -69,7 +69,7 @@ controls.touches = {
 const size = 5000;
 const divisions = 500;
 
-const gridHelper = new THREE.GridHelper(size, divisions, 0xdddddd, 0xeeeeee);
+const gridHelper = new THREE.GridHelper(size, divisions, 0xcccccc, 0xdddddd);
 scene.add(gridHelper);
 gridHelper.position.y = 0.5;
 
@@ -83,7 +83,7 @@ scene.add(mesh);
 //var ground = new Object3D()
 let size_floor = 10000;
 var geometry_floor = new THREE.BoxGeometry(size_floor, 1, size_floor);
-var material_floor = new THREE.MeshStandardMaterial({ color: 0xffffff });
+var material_floor = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
 
 var floor = new THREE.Mesh(geometry_floor, material_floor);
 floor.position.y = 0;
@@ -154,7 +154,7 @@ function addJoystick() {
     size: 200,
     multitouch: true,
     maxNumberOfNipples: 2,
-    color: "#dddddd",
+    color: "#cccccc",
     restJoystick: true,
     shape: "circle",
     dynamicPage: true,

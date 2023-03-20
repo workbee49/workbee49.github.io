@@ -1,0 +1,60 @@
+#scene-container {
+  background-color: #f6f9ff;
+}
+
+#tool-button {
+  position: absolute;
+  z-index: 1;
+  right: -90px;
+  top: 35px;
+}
+
+#select-panel {
+  margin-top: -20px;
+  width: 400px;
+  height: calc(100vh - 60px);
+  background-color: #ffffff;
+  margin-left: -430px;
+  position: absolute;
+  padding: 20px;
+  box-shadow: 0px 0px 20px rgb(1 41 112 / 10%);
+  transition: all 0.2s;
+}
+
+.model-item-container {
+  text-align: center;
+  border-radius: 0.375rem;
+  border: 1px #4154f133 solid;
+  background-color: #ffffff;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s;
+  box-shadow: 0px 0px 11px 0px rgba(34, 60, 80, 0.08);
+}
+
+.model-item-container:hover {
+  text-align: center;
+  border-radius: 0.375rem;
+  border: 1px #4154f1 solid;
+  background-color: #4154f105;
+  padding: 10px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0px 3px 11px 0px rgba(34, 60, 80, 0.1);
+}
+
+.img-src {
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  width: 50px;
+  margin-bottom: 10px;
+}
+
+#loading {
+  visibility: hidden;
+  background-color: #00000063;
+  display: block;
+  width: 100%;
+  position: absolute;
+  height: 100%;
+}
