@@ -54,9 +54,9 @@ controls.dampingFactor = 0.1;
 controls.enableZoom = false;
 controls.enablePan = false;
 
-// Add axes
-var axes = new THREE.AxesHelper(50);
-scene.add(axes);
+// // Add axes
+// var axes = new THREE.AxesHelper(50);
+// scene.add(axes);
 
 // Add grid
 const size = 5000;
