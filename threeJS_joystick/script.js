@@ -41,7 +41,10 @@ light.position.set(100, 200, 0);
 scene.add(light);
 
 // Add OrbitControls so that we can pan around with the mouse.
-var controls = new OrbitControls(camera, renderer.domElement);
+var controls = new OrbitControls(
+  camera,
+  document.getElementById("joystickWrapper2")
+);
 controls.maxDistance = 100;
 controls.minDistance = 100;
 controls.maxPolarAngle = Math.PI / 2.1;
@@ -53,6 +56,10 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.1;
 controls.enableZoom = false;
 controls.enablePan = false;
+controls.touches = {
+  ONE: THREE.TOUCH.ROTATE,
+  TWO: THREE.TOUCH.DOLLY_PAN,
+};
 
 // // Add axes
 // var axes = new THREE.AxesHelper(50);

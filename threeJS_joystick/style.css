@@ -26,6 +26,19 @@ body {
   z-index: 12;
   touch-action: manipulation;
 }
+#mobileInterface #joystickWrapper2 {
+  pointer-events: auto;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  width: 60%;
+  height: 100%;
+  z-index: 12;
+  touch-action: manipulation;
+  outline: none;
+}
 
 .noSelect {
   -webkit-touch-callout: none;
