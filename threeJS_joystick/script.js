@@ -27,7 +27,6 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
 scene.fog = new THREE.Fog(0xdddddd, 500, 600);
 // Create a camera
-var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 10000);
 camera.position.z = 10;
 camera.position.y = 5;
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dropp HQ Microverse</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="HandheldFriendly" content="true" />
+    <style>
+      .custom-loader {
+        width: calc(160px / 0.707);
+        height: 28px;
+        background: repeating-linear-gradient(
+            -45deg,
+            #766df4 0 30px,
+            #0000 0 40px
+          )
+          left/200% 100%;
+        animation: i3 2s infinite linear;
+      }
+      @keyframes i3 {
+        100% {
+          background-position: right;
+        }
+      }
+    </style>
+
+    <link
+      rel="icon"
+      href="https://discoverthreejs.com/favicon.ico"
+      type="image/x-icon"
+    />
+    <script src="https://threejs.org/examples/jsm/libs/ammo.wasm.js"></script>
+
+    <link href="./styles/main.css" rel="stylesheet" type="text/css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.149.0/build/three.module.js",
+          "three/addons/": "https://threejs.org/examples/jsm/",
+          "tween": "https://unpkg.com/three@0.139.0/examples/jsm/libs/tween.module.min.js"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div
+      style="
+        display: block;
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      "
+    >
+      <video width="250" id="video1" loop autoplay muted>
+        <!-- <source
+          src="https://objectstorage.us-ashburn-1.oraclecloud.com/n/idwkvitvtw03/b/Dropp/o/FIFA%20World%20Cup%20-%20Phone.mp4"
+          type="video/mp4"
+        /> -->
+      </video>
+      <video width="250" id="video2" loop autoplay muted>
+        <!-- <source
+          src="https://objectstorage.us-ashburn-1.oraclecloud.com/n/idwkvitvtw03/b/Dropp/o/LG-%20Phone.mp4"
+          type="video/mp4"
+        /> -->
+      </video>
+      <video width="250" id="video3" loop autoplay muted>
+        <!-- <source
+          src="https://objectstorage.us-ashburn-1.oraclecloud.com/n/idwkvitvtw03/b/Dropp/o/Untitled.mp4"
+          type="video/mp4"
+        /> -->
+      </video>
+      <video width="250" id="video4" loop autoplay muted>
+        <!-- <source
+          src="https://objectstorage.us-ashburn-1.oraclecloud.com/n/idwkvitvtw03/b/Dropp/o/Star%20Trek%20-%20Phone.mp4"
+          type="video/mp4"
+        /> -->
+      </video>
+    </div>
+
+    <div id="scene-container">
+      <div id="mobileInterface" class="noSelect">
+        <div id="joystickWrapper1"></div>
+        <div id="joystickWrapper2"></div>
+      </div>
+    </div>
+
+    <div class="container" id="loading-container">
+      <h2 class="header">Loading 3D Experience</h2>
+      <!--  @  body section start -->
+      <div class="bar">
+        <!--  $  Graphic section start -->
+        <svg>
+          <circle cx="50%" cy="50%" r="50%"></circle>
+        </svg>
+        <!--  $  Graphic section End-->
+
+        <!--  %  content section start -->
+        <h1 class="number" id="loading-status">0%</h1>
+        <h4 class="config">Loading . . .</h4>
+        <!-- %   content section End -->
+      </div>
+      <!--  @  body section End-->
+    </div>
+  </body>
+  <script type="module" src="./src/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.9.0/nipplejs.js"></script>
+</html>

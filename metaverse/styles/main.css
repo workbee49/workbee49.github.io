@@ -1,0 +1,318 @@
+body {
+  /* remove margins and scroll bars */
+  margin: 0;
+  overflow: hidden;
+  /* style text */
+  text-align: center;
+  font-size: 12px;
+  font-family: Sans-Serif;
+  /* color text */
+  color: #444;
+}
+#mobileInterface {
+  position: fixed;
+  width: calc(100% - 20px);
+  height: 100vh;
+  pointer-events: none;
+  z-index: 11;
+  top: auto;
+  bottom: 0px;
+  left: 10px;
+  touch-action: manipulation;
+}
+#mobileInterface #joystickWrapper1 {
+  pointer-events: auto;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  width: 40%;
+  height: 100%;
+  z-index: 12;
+  touch-action: manipulation;
+}
+#mobileInterface #joystickWrapper2 {
+  pointer-events: auto;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  width: 60%;
+  height: 100%;
+  z-index: 12;
+  touch-action: manipulation;
+  outline: none;
+}
+
+.noSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#UI {
+  /* position the heading */
+  position: absolute;
+  text-align: left;
+  width: 100%;
+  height: 100%;
+  /* make sure that the heading is drawn on top */
+  z-index: 1;
+}
+
+#logo_img {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+#control_img {
+  position: absolute;
+  right: 10px;
+  bottom: 100px;
+}
+
+#menu_btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.container {
+  background-color: #eee;
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.container .bar {
+  width: 200px;
+  height: 200px;
+  /*   box-shadow: -10px -10px 20px #ffffffb2,
+    inset 3px 3px 10px rgba(94, 104, 121, 0.288); */
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+.bar::before {
+  content: "";
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset -10px -10px 50px #ffffffb2,
+    inset 10px 10px 50px rgba(94, 104, 121, 0.945);
+}
+svg {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  fill: none;
+}
+svg circle {
+  position: absolute;
+  stroke: #96e82c;
+  stroke-width: 0px;
+  stroke-dashoffset: 500px;
+  stroke-dasharray: 1200px;
+  transform-origin: center;
+  transform: scale(1);
+  animation: bar 4s ease-in-out forwards;
+}
+.number {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.6em;
+  font-family: monospace;
+  color: #000;
+}
+.header {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1em;
+  font-family: "Lemonada", cursive;
+  color: #000;
+  letter-spacing: 1px;
+  animation: header 500ms 1.8s linear;
+}
+.config {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-family: cursive;
+  color: #000;
+  letter-spacing: 1px;
+  text-align: center;
+  max-height: 0;
+  animation: blink 500ms 1.8s forwards;
+}
+/* ///////////bar/////// */
+@keyframes bar {
+  0% {
+    stroke-dashoffset: -800px;
+  }
+  100% {
+    stroke-dashoffset: calc(500px - {500px * 90}/ 100);
+    stroke-width: 40px;
+  }
+}
+/* ///////////blink///////// */
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+/* ///////////blink///////// */
+@keyframes header {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.5;
+  }
+}
+
+/* ------Start Media Queries Section------- */
+
+@media (max-width: 500px) {
+  .header {
+    text-align: center;
+    font-size: 1em;
+  }
+}
+@media (max-width: 300px) {
+  .header {
+    text-align: center;
+    font-size: 14px;
+  }
+}
+/* -------End Media Queries Section-------- */
+
+#scene-container {
+  /* tell our scene container to take up the full page */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
+}
+
+#scene-container canvas {
+  position: absolute;
+}
+
+#blocker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#instructions {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.rotation-pad {
+  position: absolute;
+}
+
+.rotation-pad .region {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+      rgba(218, 225, 230, 0.25) 5%,
+      rgba(218, 225, 230, 0.5) 95%
+    ),
+    url("../images/cam.png") center center no-repeat;
+  border: 2px solid rgba(218, 225, 230, 0.25);
+  border-radius: 90px;
+  box-shadow: 0px 0px 5px rgba(194, 200, 204, 0.55);
+  user-select: none;
+}
+
+.rotation-pad .handle {
+  opacity: 0.1;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 0px;
+  left: 0px;
+  background: radial-gradient(
+    rgba(215, 225, 255, 0.7) 0%,
+    rgba(215, 225, 255, 0.5) 100%
+  );
+  /*border: 1px solid rgba(145, 105, 245, 0.90);*/
+  border-radius: 50%;
+  box-shadow: 0px 0px 7px rgba(195, 205, 245, 0.9);
+  text-align: center;
+  font: 24px/44px "Courier New", Courier, monospace;
+  user-select: none;
+}
+
+.movement-pad {
+  position: absolute;
+}
+
+.movement-pad .region {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(
+      rgba(218, 225, 230, 0.25) 5%,
+      rgba(218, 225, 230, 0.5) 95%
+    ),
+    url("../images/nav.png") center center no-repeat;
+  border: 2px solid rgba(218, 225, 230, 0.25);
+  border-radius: 90px;
+  box-shadow: 0px 0px 5px rgba(194, 200, 204, 0.55);
+  user-select: none;
+}
+
+.movement-pad .handle {
+  opacity: 0.1;
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  top: 0px;
+  left: 0px;
+  background: radial-gradient(
+    rgba(215, 225, 255, 0.7) 0%,
+    rgba(215, 225, 255, 0.5) 100%
+  );
+  /*border: 1px solid rgba(145, 105, 245, 0.90);*/
+  border-radius: 50%;
+  box-shadow: 0px 0px 7px rgba(195, 205, 245, 0.9);
+  text-align: center;
+  font: 24px/44px "Courier New", Courier, monospace;
+  user-select: none;
+}
