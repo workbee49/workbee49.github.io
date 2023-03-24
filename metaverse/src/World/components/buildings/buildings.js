@@ -1,56 +1,55 @@
-import {
-  FBXLoader
-} from "three/addons/loaders/FBXLoader.js";
-import {
-  AnimationMixer
-} from "../../../../vendor/three/build/three.module.js";
+import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
+import { AnimationMixer } from "../../../../vendor/three/build/three.module.js";
 import * as THREE from "three";
-import {
-  setupModel
-} from "./setupModel.js";
-import { AmmoPhysics } from 'three/addons/physics/AmmoPhysics.js';
+import { setupModel } from "./setupModel.js";
+import { AmmoPhysics } from "three/addons/physics/AmmoPhysics.js";
 
 async function loadBuildings() {
   var model_group = new THREE.Group();
   const loader = new FBXLoader();
 
   const [innor, elevator, outor] = await Promise.all([
-    loader.loadAsync("/assets/models/innor.fbx", function(xhr) {
-      document.getElementById('loading-status').innerHTML = Math.ceil((xhr.loaded / xhr.total) * 100) + "%";
+    loader.loadAsync("assets/models/innor.fbx", function (xhr) {
+      document.getElementById("loading-status").innerHTML =
+        Math.ceil((xhr.loaded / xhr.total) * 100) + "%";
       console.log(
         "The 3D obejct is " + (xhr.loaded / xhr.total) * 100 + "% loaded"
       );
       if (xhr.loaded == xhr.total) {
-        document.getElementById('loading-container').style.visibility = "hidden";
+        document.getElementById("loading-container").style.visibility =
+          "hidden";
       }
     }),
 
-    loader.loadAsync("/assets/models/elevator.fbx", function(xhr) {
+    loader.loadAsync("assets/models/elevator.fbx", function (xhr) {
       // document.getElementById('loading').setAttribute('value', ((xhr.loaded / xhr.total) * 100))
-      console.log(
+      console
+        .log
         // "The 3D obejct is " + (xhr.loaded / xhr.total) * 100 + "% loaded"
-      );
+        ();
       if (xhr.loaded == xhr.total) {
         // document.getElementById('loading-container').style.visibility = "hidden";
       }
     }),
-    loader.loadAsync('/assets/models/out_buildings/out_buildings.fbx', function(xhr) {
-      // document.getElementById('loading-status').innerHTML = Math.ceil((xhr.loaded / xhr.total)/2 * 100) + "%";
-      console.log(
-        "The 3D obejct is " + (xhr.loaded / xhr.total) * 100 + "% loaded"
-      );
-      if (xhr.loaded == xhr.total) {
-        // document.getElementById('loading-container').style.visibility = "hidden";
+    loader.loadAsync(
+      "/assets/models/out_buildings/out_buildings.fbx",
+      function (xhr) {
+        // document.getElementById('loading-status').innerHTML = Math.ceil((xhr.loaded / xhr.total)/2 * 100) + "%";
+        console.log(
+          "The 3D obejct is " + (xhr.loaded / xhr.total) * 100 + "% loaded"
+        );
+        if (xhr.loaded == xhr.total) {
+          // document.getElementById('loading-container').style.visibility = "hidden";
+        }
       }
-    }),
+    ),
   ]);
 
   // innor.position.set(-1000, 0, -1000);
 
-  console.log(innor)
+  console.log(innor);
 
-
-  innor.traverse(function(object) {
+  innor.traverse(function (object) {
     if (object.type == "Mesh") {
       object.castShadow = true;
       object.receiveShadow = true;
@@ -117,62 +116,65 @@ async function loadBuildings() {
       if (object.name == "Wall") {
         object.material[1].map.repeat = {
           x: 30,
-          y: 30
+          y: 30,
         };
         object.material[2].map.repeat = {
           x: 10,
-          y: 10
-        }
+          y: 10,
+        };
       }
       if (object.name == "Wall_011") {
         object.material[1].transparent = true;
         object.material[1].opacity = 0.2;
         object.material.depthWrite = false;
       }
-      if (object.name == "Cube_043") {}
+      if (object.name == "Cube_043") {
+      }
       if (object.name == "Window_013") {
         object.visible = false;
       }
       if (object.name == "Cube_015") {
         object.material[1].map.repeat = {
           x: 10,
-          y: 10
+          y: 10,
         };
         object.material[2].map.repeat = {
           x: 10,
-          y: 10
+          y: 10,
         };
       }
       if (object.name == "Wall_007") {
         object.material[1].map.repeat = {
           x: 10,
-          y: 10
+          y: 10,
         };
       }
       if (object.name == "Plane_029") {
         object.material.map.repeat = {
           x: 10,
-          y: 10
+          y: 10,
         };
         object.material.reflectivity = 0.5;
       }
       if (object.name == "Plane_001") {
         object.material[0].map.repeat = {
           x: 30,
-          y: 30
+          y: 30,
         };
         object.material[1].map.repeat = {
           x: 20,
-          y: 20
+          y: 20,
         };
         object.material[1].map.offset = {
           x: 0.134112,
-          y: 0.10668
+          y: 0.10668,
         };
       }
-      if (object.name == "Cube__5_" ||
+      if (
+        object.name == "Cube__5_" ||
         object.name == "Cube__3_" ||
-        object.name == "Cube__2_") {
+        object.name == "Cube__2_"
+      ) {
         object.visible = false;
       }
       if (object.name == "Cube_005") {
@@ -187,11 +189,10 @@ async function loadBuildings() {
       if (object.name == "video_frame_1") {
         const video1 = document.getElementsByTagName("video")[0];
         // video1.setAttribute("muted", "muted")
-        video1.addEventListener( 'play', function () {
-        } );
+        video1.addEventListener("play", function () {});
         video1.loop = true;
         var vt1 = new THREE.VideoTexture(video1);
-        console.log(vt1)
+        console.log(vt1);
         vt1.repeat.x = 1.8;
         vt1.offset.x = -0.4;
         object.material[1].emissiveMap = vt1;
@@ -203,7 +204,7 @@ async function loadBuildings() {
         var vt2 = new THREE.VideoTexture(video2);
         vt2.repeat.x = 1.8;
         vt2.offset.x = -0.4;
-        object.material[1]= new THREE.MeshStandardMaterial({map:vt2})
+        object.material[1] = new THREE.MeshStandardMaterial({ map: vt2 });
       }
       if (object.name == "video_frame_1__2_") {
         const video3 = document.getElementsByTagName("video")[2];
@@ -212,7 +213,7 @@ async function loadBuildings() {
         var vt3 = new THREE.VideoTexture(video3);
         vt3.repeat.x = 1.8;
         vt3.offset.x = -0.4;
-        object.material[1]= new THREE.MeshStandardMaterial({map:vt3})
+        object.material[1] = new THREE.MeshStandardMaterial({ map: vt3 });
       }
       if (object.name == "video_frame_1__3_") {
         const video4 = document.getElementsByTagName("video")[3];
@@ -221,7 +222,7 @@ async function loadBuildings() {
         var vt4 = new THREE.VideoTexture(video4);
         vt4.repeat.x = 1.8;
         vt4.offset.x = -0.4;
-        object.material[1]= new THREE.MeshStandardMaterial({map:vt4})
+        object.material[1] = new THREE.MeshStandardMaterial({ map: vt4 });
         // object.material[1].emissive.setHex(0xffffff)
       }
 
@@ -256,17 +257,20 @@ async function loadBuildings() {
       //   object.material[1].emissiveMap = vt4;
       //   object.material[1].emissive.setHex(0xffffff)
       // }
-
     }
     if (object.type == "SpotLight") {
       // object.visible = false;
       object.decay = 0.5;
       object.distance = 500;
-      object.target.position.set(object.position.x, object.position.y - 100, object.position.z);
+      object.target.position.set(
+        object.position.x,
+        object.position.y - 100,
+        object.position.z
+      );
       object.target.updateMatrixWorld();
       // innor.add(new THREE.SpotLightHelper(object));
       if (object.name.includes("Spot_Light_led")) {
-        object.color.setHex(0xbd965d)
+        object.color.setHex(0xbd965d);
         object.intensity = 50;
       }
       if (object.name.includes("Spot_Light_confroom")) {
@@ -295,9 +299,8 @@ async function loadBuildings() {
         // console.log(shadowlight);
         // innor.add(new THREE.DirectionalLightHelper(shadowlight));
         // innor.add(shadowlight);
-
-              }
       }
+    }
 
     // }
     if (object.type == "Group") {
@@ -307,11 +310,11 @@ async function loadBuildings() {
 
         var planeMaterial = new THREE.MeshBasicMaterial({
           map: texture,
-          transparent: true, 
-          side : THREE.DoubleSide,
-          depthWrite: false, 
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
         });
-        
+
         // Combine the geometry and material into a mesh
         var plane = new THREE.Mesh(planeGeometry, planeMaterial);
         // Add the plane to the scene
@@ -319,17 +322,19 @@ async function loadBuildings() {
       }
       if (object.name == "shoptainment") {
         var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
-        var texture = new THREE.TextureLoader().load("/assets/models/shoptainment.png");
+        var texture = new THREE.TextureLoader().load(
+          "/assets/models/shoptainment.png"
+        );
         texture.wrapS = THREE.RepeatWrapping;
-        texture.repeat.x = - 1;
+        texture.repeat.x = -1;
 
         var planeMaterial = new THREE.MeshBasicMaterial({
           map: texture,
-          transparent: true, 
-          side : THREE.DoubleSide,
-          depthWrite: false, 
+          transparent: true,
+          side: THREE.DoubleSide,
+          depthWrite: false,
         });
-        
+
         // Combine the geometry and material into a mesh
         var plane = new THREE.Mesh(planeGeometry, planeMaterial);
         // plane.matrixWorld.scale.y = 100;
@@ -339,19 +344,16 @@ async function loadBuildings() {
     }
   });
 
-
-
   elevator.position.set(0, 140, 1108);
-  innor.traverse(function(object) {
-    if(object.name == "Cube__1_"){
+  innor.traverse(function (object) {
+    if (object.name == "Cube__1_") {
       object.visible = false;
     }
-  })
+  });
 
   outor.position.x = 1000;
   outor.position.y = 2275;
   outor.position.z = -11500;
-
 
   model_group.add(innor);
   // model_group.add(out_buildings);
@@ -364,6 +366,4 @@ async function loadBuildings() {
   return model_group;
 }
 
-export {
-  loadBuildings
-};
+export { loadBuildings };
