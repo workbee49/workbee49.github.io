@@ -32,6 +32,26 @@ class World {
     camera = createCamera();
     scene = createScene();
     const { renderer, css3drenderer } = createRenderer();
+    controls = new OrbitControls(
+      camera,
+      document.getElementById("joystickWrapper2")
+    );
+    controls.maxDistance = 1;
+    controls.minDistance = 1;
+    controls.maxPolarAngle = Math.PI;
+    controls.minPolarAngle = 0;
+    controls.autoRotate = false;
+    controls.autoRotateSpeed = 0;
+    controls.rotateSpeed = -0.4;
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.1;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.touches = {
+      ONE: THREE.TOUCH.ROTATE,
+      TWO: THREE.TOUCH.DOLLY_PAN,
+    };
+    //
 
     loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
@@ -53,36 +73,16 @@ class World {
     let tempVector = new THREE.Vector3();
     let upVector = new THREE.Vector3(0, 1, 0);
     let joyManager;
-    // camera.position.z = 100;
-    // camera.position.y = 50;
-    var controls = new OrbitControls(
-      camera,
-      document.getElementById("joystickWrapper2")
-    );
-    controls.maxDistance = 100;
-    controls.minDistance = 100;
-    controls.maxPolarAngle = Math.PI / 2.1;
-    controls.minPolarAngle = 0;
-    controls.autoRotate = false;
-    controls.autoRotateSpeed = 0;
-    controls.rotateSpeed = 0.4;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.1;
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.touches = {
-      ONE: THREE.TOUCH.ROTATE,
-      TWO: THREE.TOUCH.DOLLY_PAN,
-    };
-    //
 
     const geometry = new THREE.CylinderGeometry(0, 0, 0, 25);
     var cubeMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
 
     var mesh = new THREE.Mesh(geometry, cubeMaterial);
-    mesh.position.y = 70;
+    mesh.position.y = 90;
     scene.add(mesh);
+    camera.position.sub(controls.target);
     controls.target.copy(mesh.position);
+    camera.position.add(mesh.position);
     addJoystick();
 
     // loop.updatables.push(controls);
@@ -104,7 +104,6 @@ class World {
       joyManager.on("move", function (evt, data) {
         const forward = data.vector.y;
         const turn = data.vector.x;
-        console.log(data.vector);
 
         if (forward > 0) {
           fwdValue = Math.abs(forward);
@@ -121,7 +120,6 @@ class World {
           lftValue = Math.abs(turn);
           rgtValue = 0;
         }
-        console.log("asaaaaaaaaaaaaaaad");
         // move the player
         const angle = controls.getAzimuthalAngle();
 

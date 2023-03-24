@@ -275,30 +275,7 @@ async function loadBuildings() {
       }
       if (object.name.includes("Spot_Light_confroom")) {
         object.color.setHex(0xff6a00);
-        // object.castShadow = true;
-        // object.shadow.radius = 1;
-        // object.shadow.blurSamples = 50;
-        // object.shadow.radius = 2;
-        // object.shadow.blurSamples = 30;
         object.intensity = 100;
-        //       if(object.name == "Spot_Light_confroom2"){
-
-        //         const shadowlight = new THREE.DirectionalLight(0xffeab1, 0.3);
-        // shadowlight.shadow.camera.left = -5000;
-        // shadowlight.shadow.camera.right = 5000;
-        // shadowlight.shadow.camera.top = 5000;
-        // shadowlight.shadow.camera.bottom = -5000;
-        // shadowlight.shadow.camera.near = 0.5; // default
-        // shadowlight.shadow.camera.far = 6000; // default
-        // shadowlight.shadow.radius = 2;
-        // shadowlight.shadow.blurSamples = 30;
-        // shadowlight.shadow.darkness = 1;
-        // shadowlight.castShadow = true;
-        // shadowlight.position.set(object.position.x, object.position.y, object.position.z);
-        // shadowlight.target.position.set(object.position.x,object.position.y-100,object.position.z);
-        // console.log(shadowlight);
-        // innor.add(new THREE.DirectionalLightHelper(shadowlight));
-        // innor.add(shadowlight);
       }
     }
 
@@ -306,7 +283,7 @@ async function loadBuildings() {
     if (object.type == "Group") {
       if (object.name == "UC") {
         var planeGeometry = new THREE.PlaneGeometry(1000, 1000);
-        var texture = new THREE.TextureLoader().load("/assets/models/UC.png");
+        var texture = new THREE.TextureLoader().load("assets/models/UC.png");
 
         var planeMaterial = new THREE.MeshBasicMaterial({
           map: texture,
@@ -323,7 +300,7 @@ async function loadBuildings() {
       if (object.name == "shoptainment") {
         var planeGeometry = new THREE.PlaneGeometry(2000, 2000);
         var texture = new THREE.TextureLoader().load(
-          "/assets/models/shoptainment.png"
+          "assets/models/shoptainment.png"
         );
         texture.wrapS = THREE.RepeatWrapping;
         texture.repeat.x = -1;

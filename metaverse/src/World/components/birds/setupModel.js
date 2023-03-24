@@ -1,7 +1,6 @@
 import { AnimationMixer } from "../../../../vendor/three/build/three.module.js";
 
 function setupModel(data) {
-  console.log("qbirdaaaaaaaaaaaaaa");
   const model = data.scene.children[0];
   const clip = data.animations[0];
   console.log(model);
