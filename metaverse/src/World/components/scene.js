@@ -8,14 +8,15 @@ function createScene() {
   // scene.background = new Color("blue");
 
   new RGBELoader().load(
-    "/assets/textures/FluffballDay4k.hdr",
+    "assets/textures/FluffballDay4k.hdr",
     function (texture) {
       texture.mapping = THREE.EquirectangularReflectionMapping;
       scene.background = texture;
       scene.environment = texture;
-    },function ( xhr ) {
-      console.log( 'The sky is ' + ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-      },
+    },
+    function (xhr) {
+      console.log("The sky is " + (xhr.loaded / xhr.total) * 100 + "% loaded");
+    }
   );
 
   return scene;
