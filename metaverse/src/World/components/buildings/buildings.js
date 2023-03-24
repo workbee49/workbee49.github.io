@@ -32,7 +32,7 @@ async function loadBuildings() {
       }
     }),
     loader.loadAsync(
-      "/assets/models/out_buildings/out_buildings.fbx",
+      "assets/models/out_buildings/out_buildings.fbx",
       function (xhr) {
         // document.getElementById('loading-status').innerHTML = Math.ceil((xhr.loaded / xhr.total)/2 * 100) + "%";
         console.log(
