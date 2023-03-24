@@ -42,9 +42,7 @@ class World {
     controls.minPolarAngle = 0;
     controls.autoRotate = false;
     controls.autoRotateSpeed = 0;
-    controls.rotateSpeed = -0.4;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.1;
+    controls.rotateSpeed = -0.2;
     controls.enableZoom = false;
     controls.enablePan = false;
     controls.touches = {
@@ -71,21 +69,52 @@ class World {
     let rgtValue = 0;
     let lftValue = 0;
     let tempVector = new THREE.Vector3();
-    let upVector = new THREE.Vector3(0, 1, 0);
+    let upVector = new THREE.Vector3(0, 2, 0);
     let joyManager;
 
     const geometry = new THREE.CylinderGeometry(0, 0, 0, 25);
     var cubeMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
 
     var mesh = new THREE.Mesh(geometry, cubeMaterial);
-    mesh.position.y = 90;
-    scene.add(mesh);
+
     camera.position.sub(controls.target);
     controls.target.copy(mesh.position);
     camera.position.add(mesh.position);
     addJoystick();
 
     // loop.updatables.push(controls);
+    function updatePlayer() {
+      const angle = controls.getAzimuthalAngle();
+
+      if (fwdValue > 0) {
+        tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
+        mesh.position.addScaledVector(tempVector, 1);
+      }
+
+      if (bkdValue > 0) {
+        tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
+        mesh.position.addScaledVector(tempVector, 1);
+      }
+
+      if (lftValue > 0) {
+        tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
+        mesh.position.addScaledVector(tempVector, 1);
+      }
+
+      if (rgtValue > 0) {
+        tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
+        mesh.position.addScaledVector(tempVector, 1);
+      }
+
+      mesh.updateMatrixWorld();
+
+      //controls.target.set( mesh.position.x, mesh.position.y, mesh.position.z );
+      // reposition camera
+      camera.position.sub(controls.target);
+      controls.target.copy(mesh.position);
+      camera.position.add(mesh.position);
+      // console.log(mesh.position);
+    }
 
     function addJoystick() {
       const options = {
@@ -93,7 +122,7 @@ class World {
         size: 200,
         multitouch: true,
         maxNumberOfNipples: 2,
-        color: "#cccccc",
+        color: "#ffffff",
         restJoystick: true,
         shape: "circle",
         dynamicPage: true,
@@ -121,35 +150,6 @@ class World {
           rgtValue = 0;
         }
         // move the player
-        const angle = controls.getAzimuthalAngle();
-
-        if (fwdValue > 0) {
-          tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
-          mesh.position.addScaledVector(tempVector, 1);
-        }
-
-        if (bkdValue > 0) {
-          tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
-          mesh.position.addScaledVector(tempVector, 1);
-        }
-
-        if (lftValue > 0) {
-          tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
-          mesh.position.addScaledVector(tempVector, 1);
-        }
-
-        if (rgtValue > 0) {
-          tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
-          mesh.position.addScaledVector(tempVector, 1);
-        }
-
-        mesh.updateMatrixWorld();
-
-        //controls.target.set( mesh.position.x, mesh.position.y, mesh.position.z );
-        // reposition camera
-        camera.position.sub(controls.target);
-        controls.target.copy(mesh.position);
-        camera.position.add(mesh.position);
       });
 
       joyManager.on("end", function (evt) {
@@ -177,87 +177,152 @@ class World {
     led_13[0].material = new THREE.MeshLambertMaterial({ color: 0x000000 });
     led_13[0].material.emissive.setHex(0x00ff00);
     elevator_door.position.y -= 2;
-    // floor1_elevator_door.position.z -= 200;
+
+    mesh.position.y = 120;
+    scene.add(mesh);
+    let flag = true;
     document.addEventListener("keydown", (event) => {
       if (event.key == "b") {
-        new TWEEN.Tween(elevator_door.position)
-          .to(
-            {
-              y: elevator_door.position.y + 2,
-            },
-            2000
-          )
-          .start()
-          .onComplete(() => {
-            new TWEEN.Tween(elevator.position)
-              .to(
-                {
-                  y: elevator.position.y + 675,
-                },
-                6000
-              )
-              .start();
-            new TWEEN.Tween(camera.position)
-              .to(
-                {
-                  y: camera.position.y + 675,
-                },
-                6000
-              )
-              .start();
-            led_13.map((x, i) => {
-              x.material = new THREE.MeshLambertMaterial({ color: 0x000000 });
-              x.material.emissive.setHex(0x00ff00);
-              x.material.emissiveIntensity = 0;
-              console.log(x.material);
-              new TWEEN.Tween(x.material)
+        if (flag) {
+          new TWEEN.Tween(elevator_door.position)
+            .to(
+              {
+                y: elevator_door.position.y + 2,
+              },
+              2000
+            )
+            .start()
+            .onComplete(() => {
+              new TWEEN.Tween(elevator.position)
                 .to(
                   {
-                    emissiveIntensity: 1,
+                    y: elevator.position.y + 675,
                   },
-                  500
+                  6000
                 )
-                .delay(1000 * i)
                 .start();
-              if (i != led_13.length - 1) {
+              new TWEEN.Tween(mesh.position)
+                .to(
+                  {
+                    y: mesh.position.y + 675,
+                  },
+                  6000
+                )
+                .start();
+              led_13.map((x, i) => {
+                x.material = new THREE.MeshLambertMaterial({ color: 0x000000 });
+                x.material.emissive.setHex(0x00ff00);
+                x.material.emissiveIntensity = 0;
                 new TWEEN.Tween(x.material)
                   .to(
                     {
-                      emissiveIntensity: 0,
+                      emissiveIntensity: 1,
                     },
-                    10
+                    500
                   )
-                  .delay(1000 * (i + 1))
+                  .delay(1000 * i)
                   .start();
-              }
-            });
-            new TWEEN.Tween(elevator_door.position)
-              .to(
-                {
-                  y: elevator_door.position.y - 2,
-                },
-                2000
-              )
-              .delay(1000 * (led_13.length + 1))
-              .start();
-          })
-          .update(() => renderer.render(scene, camera));
-
-        // new TWEEN.Tween(elevator.position)
-        // .to({
-        //     y : elevator.position.y+10,
-        //   },
-        //   6000
-        // )
-        // .delay(6000)
-        // .start()
-        // .update(()=>{renderer.render(scene, camera);
-        //   co})
+                if (i != led_13.length - 1) {
+                  new TWEEN.Tween(x.material)
+                    .to(
+                      {
+                        emissiveIntensity: 0,
+                      },
+                      10
+                    )
+                    .delay(1000 * (i + 1))
+                    .start();
+                }
+              });
+              new TWEEN.Tween(elevator_door.position)
+                .to(
+                  {
+                    y: elevator_door.position.y - 2,
+                  },
+                  2000
+                )
+                .delay(1000 * (led_13.length + 1))
+                .start();
+            })
+            .update(() => renderer.render(scene, camera));
+        } else {
+          new TWEEN.Tween(elevator_door.position)
+            .to(
+              {
+                y: elevator_door.position.y + 2,
+              },
+              2000
+            )
+            .start()
+            .onComplete(() => {
+              new TWEEN.Tween(elevator.position)
+                .to(
+                  {
+                    y: elevator.position.y - 675,
+                  },
+                  6000
+                )
+                .start();
+              new TWEEN.Tween(mesh.position)
+                .to(
+                  {
+                    y: mesh.position.y - 675,
+                  },
+                  6000
+                )
+                .start();
+              led_13
+                .slice(0)
+                .reverse()
+                .map((x, i) => {
+                  x.material = new THREE.MeshLambertMaterial({
+                    color: 0x000000,
+                  });
+                  x.material.emissive.setHex(0x00ff00);
+                  x.material.emissiveIntensity = 0;
+                  console.log(x.material);
+                  new TWEEN.Tween(x.material)
+                    .to(
+                      {
+                        emissiveIntensity: 1,
+                      },
+                      500
+                    )
+                    .delay(1000 * i)
+                    .start();
+                  if (i != led_13.length - 1) {
+                    new TWEEN.Tween(x.material)
+                      .to(
+                        {
+                          emissiveIntensity: 0,
+                        },
+                        10
+                      )
+                      .delay(1000 * (i + 1))
+                      .start();
+                  }
+                });
+              new TWEEN.Tween(elevator_door.position)
+                .to(
+                  {
+                    y: elevator_door.position.y - 2,
+                  },
+                  2000
+                )
+                .delay(1000 * (led_13.length + 1))
+                .start();
+            })
+            .update(() => renderer.render(scene, camera));
+        }
+        flag = !flag;
       }
     });
 
     TWEEN.tick = (delta) => {
+      // console
+
       TWEEN.update();
+      updatePlayer();
     };
     loop.updatables.push(TWEEN);
     scene.add(building);
@@ -266,7 +331,7 @@ class World {
   }
 
   render() {
-    () => {};
+    console.log("asdasd");
     renderer.render(scene, camera);
     // css3drenderer.render(scene, camera);
   }

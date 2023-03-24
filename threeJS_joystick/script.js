@@ -27,6 +27,12 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
 scene.fog = new THREE.Fog(0xdddddd, 500, 600);
 // Create a camera
+const camera = new THREE.PerspectiveCamera(
+  60, // fov = Field of View
+  1, // aspect ratio (dummy value)
+  0.1, // near clipping plane
+  100000 // far clipping plane
+);
 camera.position.z = 10;
 camera.position.y = 5;
 
@@ -117,29 +123,23 @@ function animate() {
 function updatePlayer() {
   // move the player
   const angle = controls.getAzimuthalAngle();
-
   if (fwdValue > 0) {
     tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
     mesh.position.addScaledVector(tempVector, 1);
   }
-
   if (bkdValue > 0) {
     tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
     mesh.position.addScaledVector(tempVector, 1);
   }
-
   if (lftValue > 0) {
     tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
     mesh.position.addScaledVector(tempVector, 1);
   }
-
   if (rgtValue > 0) {
     tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
     mesh.position.addScaledVector(tempVector, 1);
   }
-
   mesh.updateMatrixWorld();
-
   //controls.target.set( mesh.position.x, mesh.position.y, mesh.position.z );
   // reposition camera
   camera.position.sub(controls.target);
